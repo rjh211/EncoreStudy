@@ -11,3 +11,6 @@
 #Web
 - JSP / Spring boot / JPA / Vue.js / HTML / CSS 에 관한 전반적인 내용 학습
 - Restful 에 대한 학습
+
+#Android
+- Intent, Activity에 대한 활용
