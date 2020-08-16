@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Insert title here</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+/* ajax를 통해 서버에 정보 요청 */
+	$(document).ready(()=>{
+		$("#btn1").click(()=>{
+			var id = $("#id").val();
+			var pwd = $("#pwd").val();
+			$.ajax({
+/* 				url : "http://localhost:8888/members/login/"+id+" "+pw,			id와 pw가 url에 노출됨
+				method : "get",
+				dataType : "text",
+				success : data=>{
+					var obj = $.parseJSON(data);
+					var action = obj.action;
+					var result = obj.result;
+					var data = obj.data;
+					//document.write(data.email.toString());
+					document.getElementById("isLogin").value = result.toString();
+
+					if(result){sessionStorage.setItem("")}
+					
+					var str = "";
+					var typei = obj.typei;
+					var types = obj.types;
+					if(typei == "COSTOMER"){
+						str = "/customer";
+					} else {
+						str = "/seller"
+					}
+					$("#res").html(html);
+				}	 */	
+				url : "http://localhost:8888/members/login",
+				method : "get",
+				data : {"id" : id, "pwd" : pwd},
+				dataType : "text",
+				success : (data)=>{
+					var obj = $.parseJSON(data);
+					if(obj.result){
+						var page = ""
+						if(obj.typei == 0) page = "consumer.html";
+						else page = "seller.html";
+
+						sessionStorage.setItem("id", id);
+						sessionStorage.setItem("typei", obj.data.typei);
+						sessionStorage.setItem("types", obj.data.types);
+					} else{
+						$("#title").html("login Error");
+					}
+					window.location.href='http://localhost:1111/dynamicWeb/'+page;
+				}
+			})
+		})
+	})
+</script>
+</head>
+<body>
+<h2>Login Form</h2>
+<div id = "title"></div>
+id : <input type = "text" id = "id">
+pw : <input type = "text" id = "pwd">
+<input type = "button" id = "btn1" value = "전송"><br/>
+성공 여부 : <input type = "text" id = "isLogin" readonly>
+</body>
+</html>

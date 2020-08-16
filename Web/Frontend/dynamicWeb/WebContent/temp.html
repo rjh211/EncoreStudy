@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+<script>
+	$(document).ready(()=>{
+		var id = $('#id').val();
+		var pwd = $('#pwd').val();
+		$.ajax({
+			url : "http://localhost:8888/members",
+			method : "get",
+			data : {"id" : id, "pwd" : pwd},
+			dataType : "text",
+			success : (data)=>{
+				var obj = $.parseJSON(data);
+				if(obj.result){
+					var page = ""
+					if(obj.typei == 0){
+						page = "consumer.html";
+					} else {
+						page = "seller.html";
+					}
+					sessionStorage.setItem("id", id);
+					sessionStorage.setItem("typei", obj.typei);
+					sessionStorage.setItem("types", obj.types);
+				} else{
+					$("#title").html("login Error");
+				}
+			}
+		})
+	})
+</script>
+</head>
+<body>
+
+</body>
+</html>

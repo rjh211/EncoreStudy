@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+/* ajax를 통해 서버에 정보 요청 */
+	$(document).ready(()=>{
+		$("#btn1").click(()=>{
+			var id = $("#id").val();
+			$.ajax({
+				url : "http://localhost:8888/members/"+id,
+				method : "get",
+				dataType : "text",
+				success : data=>{
+					var obj = $.parseJSON(data);
+					var action = obj.action;
+					var result = obj.result;
+					var data = obj.data;
+					var html = "action : " + action + "<br/>"
+					console.log(data)
+					html += "result : " + result + "<br/>"
+					html += "member info <br/>"
+					if(result){
+						html += "<table border = '1'><tr><th>id</th><th>pwd</th><th>name</th><th>email</th><th>mem type</th></tr>"
+						html += "<tr><th>"+data.id+"</th><th>"+data.pwd+"</th><th>"+data.name+"</th><th>"+data.email+"</th><th>"+data.types+"</th></tr></table>"
+					}
+					$("#res").html(html);
+				}		
+			})
+		})
+	})
+</script>
+<!-- <script>
+/* 전송 데이터 표시하는 방식 */
+	var a = {"id":"aaa", "pwd":'aaa'}
+	var b = [{"id":"aaa", "pwd":'aaa'},{"id":"bbb", "pwd":'bbb'},{"id":"cccc", "pwd":'ccc'}]
+	
+	document.write(a.id + '/' + a.pwd + "<br/>")
+	for(var i =0 ;i <b.length; i++){
+		documnet.write(b[i].id + '/' + b[i].pwd + "<br/>")
+	}
+</script> -->
+</head>
+<body>
+	<input type = "text" id = "id"></textbox>
+	<input type = "button" id = "btn1" value = "Send">
+
+
+</table>
+	<div id = "res"></div>
+</body>
+</html>
